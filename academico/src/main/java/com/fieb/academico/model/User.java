@@ -3,6 +3,7 @@ package com.fieb.academico.model;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,9 +24,11 @@ public class User {
 	@Id	// Chave primária
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	// Auto-incremento
 	private Long id;
-	private String firstName;
-	private String lastName;
 	
+	@Column(name = "first_name")
+	private String firstName;
+	@Column(name = "last_name")
+	private String lastName;
 	private String email;
 	private String password;
 	
