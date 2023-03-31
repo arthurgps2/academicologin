@@ -18,15 +18,15 @@ import com.fieb.academico.service.UserService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
 		auth.setUserDetailsService(userService);
@@ -38,30 +38,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider());
 	}
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers(
-				"/registration**",
-				"/js/**",
-				"/css/**",
-				"/img/**"
-				).permitAll()
-				.and()
-				.authorizeRequests().antMatchers(GET, "/users/**").hasAnyAuthority("ROLE_USER")
-				.anyRequest().authenticated()
-				.and()
-				.formLogin().defaultSuccessUrl("/users/home", true)
-				.loginPage("/login")
-				.permitAll()
-				.and()
-				.logout()
-				.invalidateHttpSession(true)
-				.clearAuthentication(true)
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/login?logout")
+		http.authorizeRequests().antMatchers("/registration**", "/registration/**", "/js/**", "/css/**", "/img/**")
+				.permitAll().and().authorizeRequests().antMatchers(GET, "/users/**").hasAnyAuthority("ROLE_USER")
+				.anyRequest().authenticated().and().formLogin().defaultSuccessUrl("/users/home", true)
+				.loginPage("/login").permitAll().and().logout().invalidateHttpSession(true).clearAuthentication(true)
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
 				.permitAll();
 	}
-	
-	
+
 }
