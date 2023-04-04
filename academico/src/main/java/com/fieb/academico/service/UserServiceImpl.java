@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -62,14 +63,37 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findByEmail(UserDto userDto) {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepository.findByEmail(userDto.getEmail());
 	}
 
 
 	@Override
-	public User update(User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public User update(UserDto userDto) {
+		User user = new User();
+		user.setFirstName(userDto.getFirstName());
+		user.setLastName(userDto.getLastName());
+		user.setEmail(userDto.getEmail());
+		user.setAddress(userDto.getAddress());
+		user.setCep(userDto.getCep());
+		user.setCity(userDto.getCity());
+		user.setDistrict(userDto.getDistrict());
+		user.setCountry(userDto.getCountry());
+		user.setNumber(userDto.getNumber());
+		user.setState(userDto.getState());
+		
+		return userRepository.save(user);
+	}
+	
+	@Override
+	public User getAuthenticatedUser() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username;
+		if (principal instanceof UserDetails) {
+			username = ((UserDetails)principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+		User user = userRepository.findByEmail(username);
+		return user;
 	}
 }
