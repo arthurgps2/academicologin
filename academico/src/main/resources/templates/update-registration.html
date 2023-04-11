@@ -14,7 +14,7 @@
     </script>
      
      
-     <script type="text/javascript" src="/js/function.js"></script>
+     <script type="text/javascript" src="/js/busca_cep.js"></script>
 </head>
 <body>
 	<!-- create navigation bar ( header) -->
@@ -30,6 +30,13 @@
 				</button>
 				<a class="navbar-brand" href="#" th:href="@{/}">Registration and
 					Login Module</a>
+			</div>
+			
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+					<li><a th:href="@{/users/perfil/{username}(username=${username})}">Perfil</a></li>
+				</ul>
 			</div>
 		</div>
 	</nav>
@@ -65,9 +72,9 @@
 					<div class="form-group">
 						<label class="control-label" for="email"> Email </label> <input
 							id="email" class="form-control" th:field="*{email}" 
-							onblur="validarDados('email', document.getElementById('email').value,'/registration/ajax/getEmail/');"
+							onblur=""
 							required
-							autofocus="autofocus" disabled/>	
+							autofocus="autofocus" readonly/>	
 					</div>
 					
 					<div id="campo_email" class="alert alert-danger" style="display: none"></div>
@@ -75,12 +82,13 @@
 					<div class="form-group">
 						<label class="control-label" for="cep"> CEP </label> <input
 							id="cep" class="form-control"
+							onblur="pesquisacep(this.value);"
 							th:field="*{cep}" required autofocus="autofocus" />
 					</div>
 
 					<div class="form-group">
 						<label class="control-label" for="address"> Logradouro </label> <input
-							id="address" class="form-control"
+							id="rua" class="form-control"
 							th:field="*{address}" required autofocus="autofocus" />
 					</div>
 					
@@ -91,14 +99,20 @@
 					</div>
 					
 					<div class="form-group">
+						<label class="control-label" for="district"> Bairro</label> <input
+							id="bairro" class="form-control"
+							th:field="*{district}" required autofocus="autofocus" />
+					</div>
+					
+					<div class="form-group">
 						<label class="control-label" for="city"> Cidade </label> <input
-							id="city" class="form-control"
+							id="cidade" class="form-control"
 							th:field="*{city}" required autofocus="autofocus" />
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label" for="state"> Estado </label> <input
-							id="state" class="form-control"
+							id="uf" class="form-control"
 							th:field="*{state}" required autofocus="autofocus" />
 					</div>
 					

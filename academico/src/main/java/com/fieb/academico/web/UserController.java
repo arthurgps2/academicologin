@@ -50,6 +50,6 @@ public class UserController {
 	@PostMapping("/users/perfil")
 	public String updatePerfilAccount(@ModelAttribute("user") UserDto userDto) {
 		User user = userService.update(userDto);
-		return "redirect:/users/perfil" + user.getEmail();
+		return "redirect:/users/perfil/" + user.getEmail();
 	}
 }
