@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 							
 		
 		userRepository.save(user);
-		this.addRoleToUser(user.getEmail(), "ROLES");
+		this.addRoleToUser(user.getEmail(), "ROLE_USER");
 		return user;
 	}
 
