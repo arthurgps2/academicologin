@@ -1,6 +1,7 @@
 package com.fieb.academico.model;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -48,6 +50,9 @@ public class User {
 	)
 	private Collection<Role> roles;
 	
+	@OneToMany
+	@JoinColumn(name = "user_id")
+	private Collection<Curso> cursos;
 	
 	public User() {
 		
