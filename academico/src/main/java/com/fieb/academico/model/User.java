@@ -1,7 +1,6 @@
 package com.fieb.academico.model;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
@@ -52,6 +53,7 @@ public class User {
 	
 	@OneToMany
 	@JoinColumn(name = "user_id")
+	@JsonIgnore
 	private Collection<Curso> cursos;
 	
 	public User() {

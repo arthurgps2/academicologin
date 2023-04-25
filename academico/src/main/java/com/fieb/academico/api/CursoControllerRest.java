@@ -1,9 +1,13 @@
 package com.fieb.academico.api;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,5 +32,10 @@ public class CursoControllerRest {
 	@Transactional
 	public Curso saveCourse(@RequestBody Curso curso) {
 		return cursoService.save(curso);
+	}
+	
+	@GetMapping("/courses")
+	public ResponseEntity<Collection<Curso>> getAllCourses() {
+		return ResponseEntity.ok().body(cursoService.findAll());
 	}
 }
