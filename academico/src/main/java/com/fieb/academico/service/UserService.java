@@ -15,4 +15,8 @@ public interface UserService extends UserDetailsService {
 	User getAuthenticatedUser();
 	Role saveRole(Role role);
 	void addRoleToUser(String username, String rolename);
+	
+	// api
+	User getUserByUsername(String username);
+	User findUserById(Long id);
 }
