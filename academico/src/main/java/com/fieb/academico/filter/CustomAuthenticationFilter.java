@@ -1,5 +1,7 @@
 package com.fieb.academico.filter;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +21,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fieb.academico.service.UserService;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -50,7 +55,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		
 		Algorithm algorithm = Algorithm.HMAC256("mysecret".getBytes());
 		
-		String access_token = JWT.create().withSubject(userTodo.getId().toString());
+		String access_token = JWT.create().withSubject(userTodo.getId().toString())
 								.withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
 								.withIssuer(request.getRequestURL().toString())
 								.withClaim("roles", 
